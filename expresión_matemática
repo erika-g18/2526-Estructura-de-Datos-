@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+
+class BalanceoExpresion
+{
+    /// <summary>
+    /// Verifica si una expresión matemática está balanceada
+    /// usando una pila.
+    /// </summary>
+    static bool EstaBalanceada(string expresion)
+    {
+        Stack<char> pila = new Stack<char>();
+
+        foreach (char c in expresion)
+        {
+            // Si es un símbolo de apertura, se apila
+            if (c == '(' || c == '{' || c == '[')
+            {
+                pila.Push(c);
+            }
+            // Si es un símbolo de cierre
+            else if (c == ')' || c == '}' || c == ']')
+            {
+                if (pila.Count == 0)
+                    return false;
+
+                char tope = pila.Pop();
+
+                // Verifica correspondencia
+                if ((c == ')' && tope != '(') ||
+                    (c == '}' && tope != '{') ||
+                    (c == ']' && tope != '['))
+                {
+                    return false;
+                }
+            }
+        }
+
+        // Si la pila está vacía, está balanceada
+        return pila.Count == 0;
+    }
+
+    static void Main()
+    {
+        string expresion = "{7 + (8 * 5) - [(9 - 7) + (4 + 1)]}";
+
+        if (EstaBalanceada(expresion))
+            Console.WriteLine("Fórmula balanceada.");
+        else
+            Console.WriteLine("Fórmula NO balanceada.");
+    }
+}
