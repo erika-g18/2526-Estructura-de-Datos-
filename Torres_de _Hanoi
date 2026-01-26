@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+
+class TorresDeHanoi
+{
+    static Stack<int> origen = new Stack<int>();
+    static Stack<int> auxiliar = new Stack<int>();
+    static Stack<int> destino = new Stack<int>();
+
+    /// <summary>
+    /// Muestra el estado actual de las torres
+    /// </summary>
+    static void MostrarTorres()
+    {
+        Console.WriteLine("Origen: " + string.Join(",", origen));
+        Console.WriteLine("Auxiliar: " + string.Join(",", auxiliar));
+        Console.WriteLine("Destino: " + string.Join(",", destino));
+        Console.WriteLine("----------------------------");
+    }
+
+    /// <summary>
+    /// Algoritmo recursivo de Torres de Hanoi
+    /// </summary>
+    static void Hanoi(int n, Stack<int> origen, Stack<int> auxiliar, Stack<int> destino)
+    {
+        if (n > 0)
+        {
+            // Mover n-1 discos a la torre auxiliar
+            Hanoi(n - 1, origen, destino, auxiliar);
+
+            // Mover disco actual
+            destino.Push(origen.Pop());
+            MostrarTorres();
+
+            // Mover los discos de la auxiliar a destino
+            Hanoi(n - 1, auxiliar, origen, destino);
+        }
+    }
+
+    static void Main()
+    {
+        int discos = 3;
+
+        // Inicializa la torre origen
+        for (int i = discos; i >= 1; i--)
+        {
+            origen.Push(i);
+        }
+
+        Console.WriteLine("Estado inicial:");
+        MostrarTorres();
+
+        // Resolver el problema
+        Hanoi(discos, origen, auxiliar, destino);
+    }
+}
